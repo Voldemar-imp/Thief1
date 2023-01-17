@@ -11,8 +11,8 @@ public class AlarmLamp : MonoBehaviour
     private Coroutine _AudioFadeInJob;
     private Animator _animator;
     private bool _isInside = false;
-    private const string _alarm = "Alarm";
-    private const string _endAlarm = "EndAlarm";
+    private static int _alarm = Animator.StringToHash("Alarm");
+    private static int _endAlarm = Animator.StringToHash("EndAlarm");
 
     private void Start()
     {

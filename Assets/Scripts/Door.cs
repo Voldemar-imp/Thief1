@@ -11,7 +11,7 @@ public class Door : MonoBehaviour
     [SerializeField] private AlarmLamp _alarmLamp;
 
     private Animator _animator;
-    private const string _open = "Open";
+    private static int _open = Animator.StringToHash("Open");
 
     private void Start()
     {
