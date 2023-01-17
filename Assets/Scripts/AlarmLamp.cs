@@ -8,7 +8,7 @@ public class AlarmLamp : MonoBehaviour
 {
     [SerializeField] private AudioSource _audio;
 
-    private Coroutine _alarmAudioLevel;
+    private Coroutine _AudioFadeInJob;
     private Animator _animator;
     private bool _isInside = false;
     private const string _alarm = "Alarm";
@@ -21,12 +21,12 @@ public class AlarmLamp : MonoBehaviour
 
     private void SetAlarmAudioLevel()
     {
-        if (_alarmAudioLevel != null)
+        if (_AudioFadeInJob != null)
         {
-            StopCoroutine(_alarmAudioLevel);
+            StopCoroutine(_AudioFadeInJob);
         }
 
-        _alarmAudioLevel = StartCoroutine(AudioFadeIn());
+        _AudioFadeInJob = StartCoroutine(AudioFadeIn());
     }
 
     private IEnumerator AudioFadeIn()
