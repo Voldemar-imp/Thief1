@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Thief : MonoBehaviour
 {
@@ -16,10 +17,9 @@ public class Thief : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, _target.position, _speed*Time.deltaTime);        
     }
 
-    public bool IsInside()
+    public void GoInside()
     {
         _isInside = !_isInside;
-        _renderer.enabled = !_isInside;
-        return _isInside;
+        _renderer.enabled = !_isInside;        
     }
 }

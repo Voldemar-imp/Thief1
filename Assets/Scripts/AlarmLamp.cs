@@ -2,17 +2,38 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
 public class AlarmLamp : MonoBehaviour
 {
     [SerializeField] private AudioSource _audio;
-
+    [SerializeField] private DoorsStack _doorsStack;
     private Coroutine _AudioFadeInJob;
     private Animator _animator;
+    private Door[] _doors;
     private bool _isInside = false;
     private static int _alarm = Animator.StringToHash("Alarm");
     private static int _endAlarm = Animator.StringToHash("EndAlarm");
+
+
+    private void OnEnable()
+    {
+        _doors = _doorsStack.GetComponentsInChildren<Door>();
+
+        foreach (Door door in _doors)
+        {
+            door.OnOpened += SwithAlarm;
+        }    
+    }
+
+    private void OnDisable()
+    {
+        foreach (Door door in _doors)
+        {
+            door.OnOpened -= SwithAlarm;
+        }      
+    }
 
     private void Start()
     {
@@ -53,9 +74,9 @@ public class AlarmLamp : MonoBehaviour
         }
     }
 
-    public void SwithAlarm(bool isInside)
+    private void SwithAlarm()
     {
-        _isInside = isInside;
+        _isInside = !_isInside;
         SetAlarmAudioLevel();
         SetAnimationTrigger();
     }

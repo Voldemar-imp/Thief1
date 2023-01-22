@@ -3,15 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEditor.PlayerSettings;
 
 [RequireComponent(typeof(Animator))]
 public class Door : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _renderer;
-    [SerializeField] private AlarmLamp _alarmLamp;
-
-    private Animator _animator;
+    [SerializeField] private UnityEvent _onOpened; 
+    private Animator _animator;    
     private static int _open = Animator.StringToHash("Open");
+
+    public event UnityAction OnOpened
+    {
+        add => _onOpened?.AddListener(value);
+        remove => _onOpened?.RemoveListener(value);
+    }
 
     private void Start()
     {
@@ -30,8 +36,8 @@ public class Door : MonoBehaviour
     {
         if (collision.TryGetComponent<Thief>(out Thief thief))
         {            
-            bool isInside = thief.IsInside();
-            _alarmLamp.SwithAlarm(isInside);           
+            thief.GoInside();
+            _onOpened?.Invoke();
         }
     }    
 }
