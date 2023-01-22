@@ -9,14 +9,15 @@ using static UnityEditor.PlayerSettings;
 public class Door : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _renderer;
-    [SerializeField] private UnityEvent _onOpened; 
+    [SerializeField] private UnityEvent _opened; 
+
     private Animator _animator;    
     private static int _open = Animator.StringToHash("Open");
 
-    public event UnityAction OnOpened
+    public event UnityAction Opened
     {
-        add => _onOpened?.AddListener(value);
-        remove => _onOpened?.RemoveListener(value);
+        add => _opened?.AddListener(value);
+        remove => _opened?.RemoveListener(value);
     }
 
     private void Start()
@@ -37,7 +38,7 @@ public class Door : MonoBehaviour
         if (collision.TryGetComponent<Thief>(out Thief thief))
         {            
             thief.GoInside();
-            _onOpened?.Invoke();
+            _opened?.Invoke();
         }
     }    
 }

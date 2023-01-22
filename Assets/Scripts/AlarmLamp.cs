@@ -9,6 +9,7 @@ public class AlarmLamp : MonoBehaviour
 {
     [SerializeField] private AudioSource _audio;
     [SerializeField] private DoorsStack _doorsStack;
+
     private Coroutine _AudioFadeInJob;
     private Animator _animator;
     private Door[] _doors;
@@ -23,7 +24,7 @@ public class AlarmLamp : MonoBehaviour
 
         foreach (Door door in _doors)
         {
-            door.OnOpened += SwithAlarm;
+            door.Opened += OnOpened;
         }    
     }
 
@@ -31,7 +32,7 @@ public class AlarmLamp : MonoBehaviour
     {
         foreach (Door door in _doors)
         {
-            door.OnOpened -= SwithAlarm;
+            door.Opened -= OnOpened;
         }      
     }
 
@@ -74,7 +75,7 @@ public class AlarmLamp : MonoBehaviour
         }
     }
 
-    private void SwithAlarm()
+    private void OnOpened()
     {
         _isInside = !_isInside;
         SetAlarmAudioLevel();
